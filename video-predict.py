@@ -27,7 +27,7 @@ class Detect:
         if not os.path.exists(self.weights_file):
             print('Downloading {}'.format(self.weights_file))
             wget.download(
-                'https://pjreddie.com/media/files/yolov3.weights', self.weights_file)
+                'https://s3.amazonaws.com/evopter/yolo.weights', self.weights_file)
         # Import the model
         options = {"model": self.cfg_file,
                    "load": self.weights_file, "threshold": 0.1}
@@ -126,7 +126,8 @@ class Detect:
                 self.ctrler = np.zeros(
                     (frame_height, frame_width, 3), np.uint8)
                 # Make a prediction
-                self.boxes, self.dectected_objs = self.tfnet.return_predict(self.frame), {}
+                self.boxes, self.dectected_objs = self.tfnet.return_predict(self.frame), {
+                }
                 self.draw_boxes()
                 # Organize UI
                 left_frame = np.vstack((original_frame, gray_frame))
